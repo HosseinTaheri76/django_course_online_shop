@@ -1,9 +1,16 @@
 from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from django.utils.translation import gettext as _
 
 from .models import Product
 from .forms import CommentForm
+
+
+def test_translation(request):
+    result = _('Hello')
+    return HttpResponse(result)
 
 
 class ProductListView(generic.ListView):
@@ -33,4 +40,3 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
         comment.author = self.request.user
         comment.product = product
         return super().form_valid(form)
-
